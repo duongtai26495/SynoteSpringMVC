@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="/fragments/header::header_user">
+</head>
+<body>
+<div th:replace="/fragments/header::header_nav" class="header_top"></div>
+
+<div class="new_diary_wrapper container">
+    <div class="col-12 col-md-4 mt-3 p-2 offset-md-4 d-flex flex-column text-center">
+        <span class="text-white h4">New diary</span>
+        <form class="new_diary_form mt-2 col-12 p-2 form-group" method="post" th:action="@{/diary/save}" th:object="${diary}">
+            <input type="text" class="text-white form-control col-12 mt-2" th:value="${diary.title}" name="title" placeholder="Title">
+            <textarea name="content" class="text-white form-control col-12 mt-2" cols="10" rows="5" th:placeholder="${diary.content != '' ? 'Content' : '' }">[(${diary.content})]</textarea>
+            <div class="display-form d-flex flex-row col-12 form-control text-white mt-2">
+                <label>Display after saved?</label>
+                <input class="ms-2" checked type="radio" id="active" name="display" value="true">
+                <label class="ms-1" for="active">Display</label><br>
+                <input class="ms-2" type="radio" id="disable" name="display" value="false">
+                <label class="ms-1" for="disable">Hidden</label><br>
+            </div>
+            <button type="submit" name="submit" class="col-12 form-control btn-primary text-white mt-2">Save</button>
+            <a th:href="@{/}" class="col-12 form-control btn-secondary text-white mt-2">Back</a>
+        </form>
+    </div>
+
+</div>
+
+
+<div th:replace="/fragments/footer::footer" class="footer"></div>
+</body>
+</html>

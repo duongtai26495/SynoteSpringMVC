@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container top_component " th:fragment="top_component">
+        <div class="top_component_inner d-flex flex-row col-md-6 col-12 offset-md-3 p-2 mt-3 text-white  align-items-center">
+            <div class="col-4 p-1 ">
+                <form class="d-flex col-12 form-sort" th:action="@{/?sort={sort}}">
+                    <select onchange="this.form.submit()" class="form-sort" id="sort" name="sort">
+                        <option th:each="sort : ${sorts}" th:text="${sort}" th:value="${sort}" th:selected="${sorted} == ${sort}"></option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-4 p-1 text-center">
+                <span class="total_count" th:text="'Found : '+ ${#lists.size(diaries)} + ' diaries'"></span>
+            </div>
+            <div class="col-4 p-1 text-end">
+                <a class=" btn-add-diary text-white" th:href="@{/diary/new}">New Diary</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

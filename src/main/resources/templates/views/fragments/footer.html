@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id="pre-loading" th:fragment="footer">
+	
+<style>
+#pre-loading{
+   height: 100vh;
+   width: 100%;
+   position: fixed;
+   top: 0;
+   right: 0;
+   z-index: 999999;
+   background: rgba(20,20,20,1) url(/images/preloading.gif) center center no-repeat;
+   background-size: 5%;
+}
+
+@media only screen and (max-width: 1024px) {
+#pre-loading{
+background-size: 20%;
+}
+}
+</style>
+
+<script>
+
+var loader = document.getElementById("pre-loading");
+
+window.addEventListener("load", function(){
+	loader.style.display = "none";
+})
+
+</script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="/fragments/header::header_user">
+</head>
+<body>
+<div th:replace="/fragments/header::header_nav" class="header_top"></div>
+
+<div class="container top_component " th:fragment="top_component">
+        <div class="top_component_inner d-flex flex-row col-md-6 col-12 offset-md-3 p-2 mt-3 text-white  align-items-center">
+ 
+            <div class="col-12 p-1 text-center">
+                <span class="total_count" th:text="'Found : '+ ${#lists.size(diaries)} + ' diaries with keyword : '+${param.keyword}+''"></span>
+            </div>
+          
+        </div>
+    </div>
+
+<div class="diary-list-wrapper container">
+    <div class="diary-list-wrapper flex-wrap col-md-6 d-flex flex-row offset-md-3 col-12 mt-2">
+        <div th:each="diary : ${diaries}" class="diary-row">
+            <a th:href="@{/diary/update/}+${diary.id}" class="col-12 diary-item p-2">
+                <div class="d-flex flex-row col-12">
+                    <div class="title col-12">
+                        <span th:text="${diary.title}"  th:class="${diary.done == true} ? 'title_diary done' : 'title_diary'"></span>
+                    </div>
+                </div>
+
+                <div th:class="${diary.done == true} ? 'diary-content mt-1 done' : 'diary-content mt-1'">
+                    [(${diary.content})]
+                </div>
+               
+            </a>
+             <div class="diary-info d-flex flex-row mt-2 p-2">
+             		<a th:href="@{/diary/update_done?id=}+${diary.id}+'&done=false'" th:if="${diary.done == true}" class="update_done btn"><i class="fa-regular fa-square-check"></i></a>
+             		<a th:href="@{/diary/update_done?id=}+${diary.id}+'&done=true'" th:if="${diary.done == false}" class="update_done btn"><i class="fa-regular fa-square"></i></a>
+                     <span class="diary-time text-white">
+                        [[${diary.last_edited}]]
+                    </span>
+                  	<div class="col-1 back-form d-flex justify-content-end ">
+	                    <a th:if="${diary.display == true}" th:href="@{/diary/update_hidden/}+${diary.id}" class="back-arrow btn btn-danger">
+	                        <i class="fa-solid fa-trash"></i>
+	                    </a>
+	                    <a th:if="${diary.display == false}" th:href="@{/diary/update_display/}+${diary.id}" class="back-arrow btn btn-secondary">
+	                        <i class="fa-solid fa-trash-arrow-up"></i>
+	                    </a>
+                	</div>
+             </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="/fragments/footer::footer" class="footer"></div>
+</body>
+</html>

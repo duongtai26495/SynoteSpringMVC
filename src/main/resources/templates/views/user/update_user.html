@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="/fragments/header::header_user">
+</head>
+<body>
+<div th:replace="/fragments/header::header_nav" class="header_top"></div>
+
+ <div class="form-update-user col-md-6 offset-md-3 col-12 d-flex flex-column align-items-center">
+        <h4 class="update-heading mt-3 text-white">Update user information</h4>
+        <div class="form-wrapper flex-column col-12">
+            <div class="update-image-profile col-12">
+           
+                <div id="image-selected" class="user-image image-update m-auto" 
+                th:style="'background-image:url(/user/images/'+${user.username}+')'" >
+               
+                    <form action="" enctype="multipart/form-data">
+                        <label id="label_upload"  for="img_avt" class="btn col-12 text-center pick-image text-white">
+                            <i class="fa-solid fa-camera"></i> Select Image</label>
+                        <input id="img_avt" type="file" onchange="uploadImage(this)"/>
+                    </form>
+                    
+                </div>
+                
+            </div>
+            <div class="col-12 col-md-4 update-content">
+                <form th:action="@{/user/save_update}" class="update-form form-group d-flex flex-column mt-3" th:object="${user}" method="POST">
+                	<input hidden th:value="${user.id}" name="id" />
+                	
+                    <input type="text" class="form-control" hidden name="username" th:value="${user.username}">
+                    <input type="email" class="form-control" disabled placeholder="Email" name="email" th:value="${user.email}">
+                    <input id="username_field" type="text" class="form-control" placeholder="Username" disabled th:value="${user.username}">
+                    
+                    <input type="text" class="form-control" placeholder="Full name" name="full_name" th:value="${user.full_name}">
+                    <select class="form-control" id="gender" name="gender">
+                        <option name="gender" hidden>Gender</option>
+                        <option value="1" name="gender" th:selected="${user.gender == 1}" >Male</option>
+                        <option value="2" name="gender" th:selected="${user.gender == 2}" >Female</option>
+                        <option value="3" name="gender" th:selected="${user.gender == 3}" >Unknown</option>
+                    </select>
+                    
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <input class="form-control btn btn-secondary mt-3 p-2" type="submit" name="submit" value="Save" />
+                    
+                    <a th:href="@{/}" class="form-control btn btn-secondary mt-3 p-2 bg-warning" >Back</a>
+                </form>
+            </div>
+            
+        </div>
+        
+        <h4 class="result text-success" th:if="${result == 'success'}"><i class="fa-solid fa-face-laugh-wink"></i> User update success</h4>
+        <h4 class="result text-warning" th:if="${result == 'failed'}"><i class="fa-solid fa-face-sad-cry"></i> User update failed</h4>
+ </div>
+ 
+ <div id="preview-image-upload">
+ 	<div class="confirm-image-upload align-items-center d-flex flex-column">
+ 		<div id="preview-image-selected"></div>
+ 		<p class="text-confirm text-white mt-2">You confirm using this image?</p>
+ 		<div class="d-flex col-12 flex-row">
+ 		<button onclick="confirmUpload()" class="form-control bg-success text-white">Upload</button>
+ 		<button onclick="cancelUpload()" class="form-control ms-1">Try again</button>
+ 		</div>
+ 	</div>
+ </div>
+ 
+<div th:replace="/fragments/footer::footer" class="footer"></div>
+</body>
+</html>

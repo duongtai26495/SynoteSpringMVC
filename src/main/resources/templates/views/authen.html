@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="/fragments/header::header_authenticate">
+</head>
+<body>
+<div class="wrapper">
+
+    <div id="login-panel" class="authen-panel flex-column">
+        <img th:src="@{/images/logo.png}" class="logo-authen" />
+        <form class="form-group" th:action="@{/j_spring_security_check}" onsubmit="return loginFormValid()" method="post">
+            <p class="form-header mt-2 mb-2 text-white">Welcome back</p>
+            <div class="mt-2 mb-2">
+            <p class="warning_text text-warning" id="error_valid"></p>
+            </div>
+            <label for="login-username" class="lbl-input mt-3">Username</label>
+            <input id="login-username" class="form-control p-2" type="text" placeholder="Username" name="username" />
+            <label for="login-password" class="lbl-input mt-3">Password</label>
+            <input id="login-password" class="form-control p-2" type="password" placeholder="Password" name="password" />
+            <input class="form-control btn btn-secondary mt-3 p-2" type="submit" name="submit" value="Go" />
+        </form>
+        <button onclick="open_register()" id="open-register" class="form-control btn btn-primary mt-3 p-2">Join Now</button>
+        <div class="d-flex flex-column mt-5">
+        <div id="login_status">
+        <p th:if="${(param.logout != null) and (param.logout[0] == 'true')}" class="warning_text text-white">Logout success</p>
+        <p th:if="${(param.login != null) and (param.login[0] == 'false')}" class="warning_text text-danger">Username or Password incorrect</p>
+       <p th:if="${(param.register != null) and (param.register[0] == 'true')}" class="warning_text text-success">Register Successfully</p>
+        </div>    
+        </div>
+       </div>
+
+    <div id="register-panel" class="authen-panel rounded-5 flex-column">
+        <img th:src="@{/images/logo.png}" class="logo-authen" />
+        <form class="form-group" th:action="@{/save_user}" th:object="${user}" onsubmit="return registerFormValid()" method="post">
+            <p class="form-header mt-2 mb-2 text-white">Register</p>
+             <div class="mt-2 mb-2">
+	         <p class="warning_text text-warning" id="error_valid_register"></p>
+	        </div>
+            <input id="register_fullname" class="form-control p-2 mt-3" type="text" th:value="${user.full_name}" placeholder="Full name" name="full_name" />
+            <input id="register_email" class="form-control p-2 mt-3" type="email" th:value="${user.email}" placeholder="Email" name="email" />
+            <select class="form-control mt-2" id="gender" th:value="${user.gender}" name="gender">
+                <option value="" name="gender" hidden>Gender</option>
+                <option value="1" >Male</option>
+                <option value="2" >Female</option>
+                <option value="3" selected>Unknown</option>
+            </select>
+            <input id="register_username"  class="form-control p-2 mt-3" type="text" th:value="${user.username}" placeholder="Username" name="username" />
+            <input id="register_password"  class="form-control p-2 mt-3" type="password" placeholder="Password" name="password" />
+            <input class="form-control btn btn-secondary mt-3 p-2" type="submit" name="submit" value="Join now" />
+        </form>
+        
+        <button onclick="open_login()" id="open-login" class="form-control btn btn-primary mt-3 p-2">Login</button>
+        
+    </div>
+   
+</div>
+
+<div th:replace="/fragments/footer::footer" class="footer"></div>
+</body>
+</html>
